@@ -1,0 +1,12 @@
+
+scan start time:  2021-06-29 00:08:46
+scan end time  :  2021-07-02 23:53:07
+dist warning km:  250
+
+timestmap:  2021-07-14 18:06:46 	dist:  168.7
+timestmap:  2021-07-14 18:52:46 	dist:  71.4
+timestmap:  2021-07-14 19:38:46 	dist:  211.4
+timestmap:  2021-07-20 16:00:46 	dist:  196.5
+timestmap:  2021-07-24 21:14:46 	dist:  160.3
+timestmap:  2021-07-24 22:00:46 	dist:  234.0
+timestmap:  2021-07-28 05:45:46 	dist:  214.8
