@@ -1,0 +1,54 @@
+
+
+NASA study:
+AM_C103_(AIAA)_26May2020.pdf
+https://ntrs.nasa.gov/api/citations/20205003679/downloads/AM_C103_(AIAA)_26May2020.pdf
+
+
+
+Niobium C103 Alloy for Space Data Sheet.pdf
+mterion
+https://materion.com/-/media/files/alloy/datasheets/other-alloy-products/niobium-c103-alloy-for-space-data-sheet.pdf
+
+
+铌铪合金简介
+http://cn.chinatungsten.com/Nb/nihahejinjianjie.html
+
+
+short-nozzle.png
+https://www.americaspace.com/2023/04/15/transporter-7-mission-flies-falcon-heavy-to-launch-next-week/
+
+
+merlin-sealevel-vs-vac.jpg
+https://everydayastronaut.com/aerospikes/
+
+
+merlin1c-vac-nozzle.jpg
+https://space.stackexchange.com/questions/8806/what-are-the-differences-between-a-standard-merlin-engine-and-the-merlin-vacuum
+
+
+https://space.stackexchange.com/questions/8806/what-are-the-differences-between-a-standard-merlin-engine-and-the-merlin-vacuum#:~:text=The%20vacuum%20nozzle%20extension%20is,has%20no%20active%20cooling%20system.
+
+merlin-vac dicussion:
+https://space.stackexchange.com/questions/8806/what-are-the-differences-between-a-standard-merlin-engine-and-the-merlin-vacuum
+https://forum.nasaspaceflight.com/index.php?topic=47139.0
+
+merlin evolution comparions:
+https://www.b14643.de/Spacerockets_2/United_States_1/Falcon-9/Merlin/index.htm
+
+
+cork stiffener ring
+https://www.reddit.com/r/SpaceXLounge/comments/wo4bv7/whats_with_the_band_on_the_vacuum_merlin_that/
+
+
+hafnium
+https://en.wikipedia.org/wiki/Hafnium
+
+
+
+
+
+
+好在中国在 1975 年也研制成功了类似的合金。比例基本相同，只是中国的铌铪钛合金里再加入了微量（trace amount）的锆（Zirconium） 。
+短喷管
+最后再来说一说另一个经常提到的问题。有心人在看 SpaceX 直播的时候，有时候会发现，有些任务中的二级喷管特别的短，正常的二级喷管是 2.7 米长，2.5 米直径，而下图中的直播截屏，可以看到喷管短了好多，这是为啥？
