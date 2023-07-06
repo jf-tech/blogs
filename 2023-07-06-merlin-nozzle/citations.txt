@@ -32,6 +32,8 @@ https://space.stackexchange.com/questions/8806/what-are-the-differences-between-
 merlin-vac dicussion:
 https://space.stackexchange.com/questions/8806/what-are-the-differences-between-a-standard-merlin-engine-and-the-merlin-vacuum
 https://forum.nasaspaceflight.com/index.php?topic=47139.0
+nozzle 1/64" thick.
+https://forum.nasaspaceflight.com/index.php?topic=32859.msg1107129#msg1107129
 
 merlin evolution comparions:
 https://www.b14643.de/Spacerockets_2/United_States_1/Falcon-9/Merlin/index.htm
