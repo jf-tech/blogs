@@ -1,0 +1,41 @@
+https://www.youtube.com/watch?v=pQyKQCW57s0
+
+https://www.quora.com/SpaceX-and-other-manufacturers-paint-their-rocket-exteriors-Does-the-paint-have-a-purpose-besides-aesthetics-If-not-doesnt-it-add-unnecessary-weight
+
+https://arstechnica.com/science/2018/12/singed-and-sooty-spacexs-falcon-9-rocket-still-looked-brilliant-monday/?comments=1&comments-page=1
+
+https://space.stackexchange.com/questions/48304/is-falcon-9-repainted-before-reuse
+https://space.stackexchange.com/questions/52141/do-falcon-9s-get-a-thorough-wash-or-a-fresh-coat-of-paint-they-look-clean-pre-r
+
+https://www.teslarati.com/spacex-falcon-9-new-booster-turnaround-record-21-days/
+
+https://www.quora.com/How-does-SpaceX-refurbish-their-Falcon-9-rockets-after-they-land-How-long-does-it-take
+SpaceX have said the inspections/processing to let a recovered booster be reused now take less than 30 days, and is done entirely by operations in Florida, ie. no shipment back to manufacturing or to be tested at McGregor.
+
+Edit (Aug 2020) : It sounds like the turbopump turbines need checking : Teslarati report :
+
+“A bit more on turnaround work ... Musk said the company almost never needs to replace a whole engine, but that some parts like turbine wheels are changed at times. In terms of limits for the Falcon 9, Musk added that 100-plus flights are possible, although some parts will need to be replaced or upgraded. Cleaning all nine Merlin turbines is difficult, he said.”
+
+
+https://en.wikipedia.org/wiki/SpaceX_reusable_launch_system_development_program
+In August 2020, Elon Musk tweeted that refurbishment and reuse of a booster is done for less than 10% the price of a new booster while the payload reduction is below 40%. According to his tweet, SpaceX breaks even with a second flight per booster and saves money from the third flight on.[81] At that time, Falcon 9 Block 5 had made 35 flights with 11 boosters.
+
+
+https://www.reddit.com/r/SpaceXLounge/comments/rrg04m/why_is_elonspacex_relatively_tightlipped_amount/
+most of the work is decoking the engines, decoking the welds they inspect, inspecting welds, replacing ablative shielding as required, and most likely testing all electronics.
+
+Musk in the past said that recovery was "a few million"
+F9 upper stage costs about $10 million, and the marginal cost per flight not counting overheads is about $15-20 million
+
+
+https://everydayastronaut.com/engine-cooling-methodes/
+
+https://www.quora.com/Which-main-parts-of-a-SpaceX-Falcon-9-are-reused-replaced-after-the-first-flight-What-percentage-of-the-rocket-does-this-account-for
+
+return to port usually takes 2-3 days
+https://www.space.com/spacex-falcon-9-rocket-booster-six-time-flier-returns-home.html
+
+fastest booster turnaround is 21 days (including 4.5 days back to port) - 16 days refurbish process.
+https://www.teslarati.com/spacex-falcon-9-new-booster-turnaround-record-21-days/
+SpaceX says that the actual process of refurbishing Falcon 9 B1062 took just 9 days
+
