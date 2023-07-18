@@ -1,0 +1,56 @@
+centauri A and B mass:
+A: 1.08 M_sun
+B: 0.91 M_sun
+https://en.wikipedia.org/wiki/Alpha_Centauri
+
+orbital velocity
+A: -21km/s
+B: -18km/s
+relative speed 3km/s
+----------------------------
+Alpha Centauri A and B, which form a binary star system, orbit each other with an average distance (semi-major axis) of about 23 astronomical units (AU) - approximately the distance between the Sun and Uranus. The eccentricity of their orbit is about 0.52, which indicates a relatively elliptical orbit.
+
+Their orbital period is about 79.91 years. The orbital speed of a body in a binary system varies depending on its position in the orbit (it's not a constant value because the orbit is elliptical, not circular), but we can calculate an average orbital speed using the following formula:
+
+r
+Copy code
+v = 2 * pi * a / T
+where:
+
+v is the orbital speed,
+a is the semi-major axis,
+T is the orbital period,
+pi is the mathematical constant ~3.14159.
+However, to use this formula, we need to make sure that the semi-major axis a is in the same unit as the orbital period T. As we have a in AU and T in years, we need to convert AU to the same unit/year.
+
+Knowing that 1 AU is approximately equal to 1.496e+11 meters and 1 year is about 3.154e+7 seconds, we can convert the semi-major axis to meters and the orbital period to seconds, and then use the formula to find the average orbital speed in m/s:
+
+makefile
+Copy code
+a_m = 23 AU * 1.496e+11 m/AU = 3.44e+12 m
+T_s = 79.91 years * 3.154e+7 s/year = 2.52e+9 s
+
+v = 2 * pi * a_m / T_s = 8605 m/s
+This would be the average orbital speed of the stars around their center of mass. Since the two stars have similar masses, they will have similar orbital speeds.
+----------------------------
+
+
+
+
+
+Centauri A and B distance: varying between 11.2 to 35.6 astronomical units
+https://earthsky.org/brightest-stars/alpha-centauri-is-the-nearest-bright-star/#:~:text=Alpha%20Centauri%20A%20and%20B,the%20Earth%20and%20our%20sun).
+
+Proxima distance to A and B
+12,950 AU = 2e15 m
+https://en.wikipedia.org/wiki/Proxima_Centauri
+
+
+semi-major: 13000 AU
+eccentricity: 0.5
+C: 6500 AU
+semi-minor:  11250 AU
+period: 470000 years
+orbital velocity at perigee: 710m/s: apogee: 615m/s
+
+https://www.omnicalculator.com/physics/orbital-velocity
