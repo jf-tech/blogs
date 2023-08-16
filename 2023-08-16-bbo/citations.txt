@@ -13,3 +13,6 @@ https://web.archive.org/web/20100526050722/http://trs-new.jpl.nasa.gov/dspace/bi
 
 Beyond LISA- Exploring Future Gravitational Wave Missions.pdf
 https://arxiv.org/pdf/gr-qc/0506015.pdf
+
+Big Bang Observer and the neutron-star-binary subtraction problem
+0511092.pdf
