@@ -1,12 +1,10 @@
 prism-rainbow.large.jpg
 https://leverageedu.com/blog/what-is-spectroscopy/
 
-remove sofia and fully expand the table.
-
-
 Spectra and What They Can Tell Us
 https://imagine.gsfc.nasa.gov/science/toolbox/spectra1.html
 
 
 Introduction to Spectroscopy
 https://imagine.gsfc.nasa.gov/educators/lessons/xray_spectra/background-spectroscopy.html
+
