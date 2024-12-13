@@ -1,33 +1,22 @@
 
 scan start time:  2021-10-19 23:59:59
 scan end time  :  2021-10-23 14:00:02
-dist warning km:  50
+dist warning km:  8
 
-timestmap:  2021-10-20 14:57:59 	dist:  32.6
-timestmap:  2021-10-20 15:43:59 	dist:  38.0
-timestmap:  2021-10-20 16:29:59 	dist:  26.0
-timestmap:  2021-10-20 17:15:59 	dist:  37.3
-timestmap:  2021-10-20 18:01:59 	dist:  41.2
-timestmap:  2021-10-20 18:48:59 	dist:  44.3
-timestmap:  2021-10-20 19:34:59 	dist:  49.8
-timestmap:  2021-10-20 20:20:59 	dist:  37.2
-timestmap:  2021-10-20 21:06:59 	dist:  49.0
-timestmap:  2021-10-20 21:52:59 	dist:  37.0
-timestmap:  2021-10-20 23:24:59 	dist:  41.5
-timestmap:  2021-10-21 00:56:59 	dist:  48.4
-timestmap:  2021-10-21 05:33:59 	dist:  43.4
-timestmap:  2021-10-21 06:19:59 	dist:  47.2
-timestmap:  2021-10-21 07:05:59 	dist:  25.2
-timestmap:  2021-10-21 07:51:59 	dist:  29.6
-timestmap:  2021-10-21 08:37:59 	dist:  12.6
-timestmap:  2021-10-21 09:23:59 	dist:  18.8
-timestmap:  2021-10-21 10:09:59 	dist:  28.3
-timestmap:  2021-10-21 10:55:59 	dist:  32.6
-timestmap:  2021-10-21 20:55:59 	dist:  43.0
-timestmap:  2021-10-21 21:41:59 	dist:  47.0
-timestmap:  2021-10-21 22:27:59 	dist:  31.3
-timestmap:  2021-10-21 23:13:59 	dist:  41.4
-timestmap:  2021-10-22 00:00:59 	dist:  45.8
-timestmap:  2021-10-22 00:46:59 	dist:  37.8
-timestmap:  2021-10-22 01:32:59 	dist:  43.8
-timestmap:  2021-10-22 02:18:59 	dist:  38.9
+timestmap:  2021-10-20 16:30:14 	dist:  7.6
+timestmap:  2021-10-20 16:30:15 	dist:  7.5
+timestmap:  2021-10-20 16:30:16 	dist:  7.7
+timestmap:  2021-10-21 10:56:18 	dist:  7.5
+timestmap:  2021-10-21 10:56:19 	dist:  7.3
+timestmap:  2021-10-21 10:56:20 	dist:  7.4
+timestmap:  2021-10-21 10:56:21 	dist:  7.8
+timestmap:  2021-10-22 00:00:28 	dist:  7.6
+timestmap:  2021-10-22 00:00:29 	dist:  7.0
+timestmap:  2021-10-22 00:00:30 	dist:  6.7
+timestmap:  2021-10-22 00:00:31 	dist:  6.7
+timestmap:  2021-10-22 00:00:32 	dist:  7.1
+timestmap:  2021-10-22 00:00:33 	dist:  7.8
+timestmap:  2021-10-22 00:46:34 	dist:  7.5
+timestmap:  2021-10-22 00:46:35 	dist:  7.1
+timestmap:  2021-10-22 00:46:36 	dist:  7.1
+timestmap:  2021-10-22 00:46:37 	dist:  7.4

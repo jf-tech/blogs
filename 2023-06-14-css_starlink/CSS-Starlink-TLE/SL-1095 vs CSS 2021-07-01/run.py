@@ -7,7 +7,7 @@ from math import sqrt
 
 starlink_tle_file = "starlink-tle.txt"
 css_tle_file = "css-tle.txt"
-dist_warning_threshold_in_km = 250
+dist_warning_threshold_in_km = 10
 
 
 def tles2sats(filename):
@@ -51,7 +51,7 @@ print()
 delta = end_time - start_time
 starlink_idx, css_idx = 0, 0
 for m in range(round(delta.total_seconds()) + 1): ## checking distance at each second
-    t = start_time + timedelta(minutes = m)
+    t = start_time + timedelta(seconds = m)
     starlink_sat, starlink_idx = get_sat(starlink_sats, starlink_idx, t)
     css_sat, css_idx = get_sat(css_sats, css_idx, t)
     jd, fr = jday(t.year, t.month, t.day, t.hour, t.minute, t.second)
