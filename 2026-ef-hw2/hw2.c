@@ -238,42 +238,30 @@ double average_points_player(char *in_file, char *name) {
   double player_average = points_scored / matches;
   return player_average;
 } /* average_points_player() */
+
 /*
  * This function finds Purdue's best winning game in a certain month and year
  * from the record file and returns Purdue's total score in that game.
  */
 int purdue_best_winning_match_score(char *in_file, int year, int month) {
+  if (year <= 0 || month < 1 || month > 12) {
+    return BAD_DATE;
+  }
   FILE *in_fp = 0;
   in_fp = fopen(in_file, "r");
   if (in_fp == NULL) {
     return FILE_READ_ERR;
   }
-  if ((year <= 0) || (month < 1) || (month > 12)) {
-    fclose(in_fp);
-    in_fp = NULL;
-    return BAD_DATE;
-  }
-  bool valid_data = false;
-  bool date_changed = false;
-  bool prev_match_valid = false;
-  bool purdue_has_win = false;
-  int prev_year = -1;
-  int prev_month = 0;
-  int prev_day = 0;
-  int purdue_score = 0;
-  int opp_score = 0;
+  bool valid_data = false, date_changed = false, prev_match_valid = false, purdue_has_win = false;
+  int prev_year = -1, prev_month = 0, prev_day = 0;
+  int purdue_score = 0, opp_score = 0, max_purdue_score = 0;
   int max_diff = 0;
-  int max_purdue_score = 0;
   char opp_team[MAX_NAME_LENGTH + 1] = "";
   while (true) {
-    int cur_year = 0;
-    int cur_month = 0;
-    int cur_day = 0;
+    int cur_year = 0, cur_month = 0, cur_day = 0;
     char name[MAX_NAME_LENGTH + 1] = "";
     char team[MAX_NAME_LENGTH + 1] = "";
-    int points = 0;
-    int assists = 0;
-    int blocks = 0;
+    int points = 0, assists = 0, blocks = 0;
     float min = 0;
     int scanned = fscanf(in_fp, "%d-%d-%d|%49[^,],%49[^#]#%d,%d,%d,%f",
                          &cur_year, &cur_month, &cur_day, name, team, &points,
@@ -281,21 +269,12 @@ int purdue_best_winning_match_score(char *in_file, int year, int month) {
     if (scanned == EOF) {
       break;
     }
-    if (scanned != 9) {
-      fclose(in_fp);
-      in_fp = NULL;
-      return BAD_RECORD;
-    }
-    if ((points < 0) || (assists < 0) || (blocks < 0) || (min <= 0.00)) {
-      fclose(in_fp);
-      in_fp = NULL;
-      return BAD_RECORD;
+    if (scanned != 9 || points < 0 || assists < 0 || blocks < 0 || min <= 0.00) {
+      CLOSE_FP_AND_RETURN(in_fp, BAD_RECORD);
     }
     if ((cur_year <= 0) || (cur_month < 1) || (cur_month > 12) ||
         (cur_day < 1) || (cur_day > 30)) {
-      fclose(in_fp);
-      in_fp = NULL;
-      return BAD_DATE;
+      CLOSE_FP_AND_RETURN(in_fp, BAD_DATE);
     }
     if ((cur_year != year) || (cur_month != month)) {
       continue;
@@ -348,12 +327,7 @@ int purdue_best_winning_match_score(char *in_file, int year, int month) {
       }
     }
   }
-  fclose(in_fp);
-  in_fp = NULL;
-  if (!valid_data || !purdue_has_win) {
-    return NO_DATA_POINTS;
-  }
-  return max_purdue_score;
+  CLOSE_FP_AND_RETURN(in_fp, !valid_data || !purdue_has_win ? NO_DATA_POINTS : max_purdue_score);
 } /* purdue_best_winning_match_score() */
 /*
  * This function determines and returns the month in which Purdue has its
