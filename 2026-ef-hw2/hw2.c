@@ -327,11 +327,17 @@ int purdue_best_winning_match_score_2(char *in_file, int year, int month) {
   fclose(in_fp);
   in_fp = NULL;
 
+  // Because inside the while loop, we only process the records belonging to the year/month/Purdue
+  // combo, and we only reset if we see a new record matching /year/month/Purdue, and immediately
+  // adds it to a new match. In other words, the match record will never be empty, unless there
+  // is truly no interested data in the file.
   if (m.year == INVALID_DATE) {
     // this means we never seen one valid record for Purdue for the year/month.
     return NO_DATA_POINTS;
   }
 
+  // Out of the while loop, we'll always have one last match record to process because inside
+  // the loop, there is no another interested match to finish the current one for processing.
   if (m.purdue_score - m.opp_score > max_diff) {
     max_diff = m.purdue_score - m.opp_score;
     max_purdue_score = m.purdue_score;
@@ -449,14 +455,6 @@ int generate_player_report_2(char *in_file, char *name, char *out_file) {
       return ret;
     }
 
-    if (is_purdue(r.team) && strcmp(r.player, name) == 0) {
-      player_in_game = true;
-      total_points += r.points;
-      total_assists += r.assists;
-      total_blocks += r.blocks;
-      total_minutes += r.min;
-    }
-
     if (!is_record_of_match(&r, &m)) {
       // this means the current match is done processing due to the change of record date stamp.
       // remember from the spec, all records of the same match are grouped together in the input
@@ -476,6 +474,14 @@ int generate_player_report_2(char *in_file, char *name, char *out_file) {
     // If the record is from a new match, then the prev if block already
     // resets the match so need to add the record to it.
     add_record_to_match(&r, &m);
+
+    if (is_purdue(r.team) && strcmp(r.player, name) == 0) {
+      player_in_game = true;
+      total_points += r.points;
+      total_assists += r.assists;
+      total_blocks += r.blocks;
+      total_minutes += r.min;
+    }
   }
   fclose(in_fp);
   in_fp = NULL;
