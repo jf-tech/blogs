@@ -442,6 +442,7 @@ int purdue_best_month(char *in_file) {
   }
   return best_month;
 } /* purdue_best_month() */
+
 /*
  * This function generates a comprehensive report of a requested Purdue player
  * including their name, total number of played games, overal statistics, and
@@ -456,33 +457,18 @@ int generate_player_report(char *in_file, char *name, char *out_file) {
   FILE *out_fp = 0;
   out_fp = fopen(out_file, "w");
   if (out_fp == NULL) {
-    fclose(in_fp);
-    in_fp = NULL;
-    return FILE_WRITE_ERR;
+    CLOSE_FP_AND_RETURN(in_fp, FILE_WRITE_ERR);
   }
-  bool valid_data = false;
-  bool date_changed = false;
-  bool player_in_game = false;
-  int prev_year = -1;
-  int prev_month = 0;
-  int prev_day = 0;
-  int purdue_score = 0;
-  int opp_score = 0;
-  int games = 0;
-  int games_won = 0;
-  double total_points = 0.0;
-  double total_assists = 0.0;
-  double total_blocks = 0.0;
-  double total_minutes = 0.0;
+  bool valid_data = false, date_changed = false, player_in_game = false;
+  int prev_year = -1, prev_month = 0, prev_day = 0;
+  int purdue_score = 0, opp_score = 0;
+  int games = 0, games_won = 0;
+  double total_points = 0.0, total_assists = 0.0, total_blocks = 0.0, total_minutes = 0.0;
   while (true) {
-    int cur_year = 0;
-    int cur_month = 0;
-    int cur_day = 0;
+    int cur_year = 0, cur_month = 0, cur_day = 0;
     char scanned_player[MAX_NAME_LENGTH + 1] = "";
     char scanned_team[MAX_NAME_LENGTH + 1] = "";
-    int points = 0;
-    int assists = 0;
-    int blocks = 0;
+    int points = 0, assists = 0, blocks = 0;
     float min = 0;
     int scanned = fscanf(in_fp, "%d-%d-%d|%49[^,],%49[^#]#%d,%d,%d,%f",
                          &cur_year, &cur_month, &cur_day, scanned_player,
@@ -490,27 +476,12 @@ int generate_player_report(char *in_file, char *name, char *out_file) {
     if (scanned == EOF) {
       break;
     }
-    if (scanned != 9) {
-      fclose(in_fp);
-      in_fp = NULL;
-      fclose(out_fp);
-      out_fp = NULL;
-      return BAD_RECORD;
-    }
-    if ((points < 0) || (assists < 0) || (blocks < 0) || (min <= 0.00)) {
-      fclose(in_fp);
-      in_fp = NULL;
-      fclose(out_fp);
-      out_fp = NULL;
-      return BAD_RECORD;
+    if (scanned != 9 || (points < 0) || (assists < 0) || (blocks < 0) || (min <= 0.00)) {
+      CLOSE_2FP_AND_RETURN(in_fp, out_fp, BAD_RECORD);
     }
     if ((cur_year <= 0) || (cur_month < 1) || (cur_month > 12) ||
         (cur_day < 1) || (cur_day > 30)) {
-      fclose(in_fp);
-      in_fp = NULL;
-      fclose(out_fp);
-      out_fp = NULL;
-      return BAD_DATE;
+      CLOSE_2FP_AND_RETURN(in_fp, out_fp, BAD_DATE);
     }
     if (((cur_year != prev_year) || (cur_month != prev_month) ||
          (cur_day != prev_day)) && (prev_year != -1)) {
@@ -553,22 +524,14 @@ int generate_player_report(char *in_file, char *name, char *out_file) {
   fclose(in_fp);
   in_fp = NULL;
   if (!valid_data) {
-    fclose(out_fp);
-    out_fp = NULL;
-    return NO_DATA_POINTS;
+    CLOSE_FP_AND_RETURN(out_fp, NO_DATA_POINTS);
   }
-  double points_per_game = total_points / games;
-  double assists_per_game = total_assists / games;
-  double blocks_per_game = total_blocks / games;
-  double average_minutes = total_minutes / games;
   fprintf(out_fp, "Player: %s\n", name);
   fprintf(out_fp, "Games: %d\n", games);
   fprintf(out_fp, "Games Won: %d\n", games_won);
-  fprintf(out_fp, "Points per Game: %.2f\n", points_per_game);
-  fprintf(out_fp, "Assists per Game: %.2f\n", assists_per_game);
-  fprintf(out_fp, "Blocks per Game: %.2f\n", blocks_per_game);
-  fprintf(out_fp, "Average Minutes: %.2f\n", average_minutes);
-  fclose(out_fp);
-  out_fp = NULL;
-  return SUCCESS;
+  fprintf(out_fp, "Points per Game: %.2f\n", total_points / games);
+  fprintf(out_fp, "Assists per Game: %.2f\n", total_assists / games);
+  fprintf(out_fp, "Blocks per Game: %.2f\n", total_blocks / games);
+  fprintf(out_fp, "Average Minutes: %.2f\n", total_minutes / games);
+  CLOSE_FP_AND_RETURN(out_fp, SUCCESS);
 } /* generate_player_report() */
