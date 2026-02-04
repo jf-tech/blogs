@@ -1,9 +1,3 @@
-/*
- * Homework 2
- * Emily Feng
- * CS 240, Spring 2026
- * Purdue University
- */
 #include "hw2.h"
 #include <stdbool.h>
 #include <stdio.h>
