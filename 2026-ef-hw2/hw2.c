@@ -32,38 +32,55 @@ int generate_matches_history(char *in_file, int year, char *out_file) {
     CLOSE_FP_AND_RETURN(in_fp, FILE_WRITE_ERR);
   }
   fprintf(out_fp, "%d\n", year);
-  bool valid_data = false, date_changed = false, prev_match_valid = false;
-  int prev_year = -1, prev_month = 0, prev_day = 0;
-  int purdue_score = 0, opp_score = 0;
+  bool valid_data = false;
+  bool date_changed = false;
+  bool prev_match_valid = false;
+  int prev_year = -1;
+  int prev_month = 0;
+  int prev_day = 0;
+  int purdue_score = 0;
+  int opp_score = 0;
   char opp_team[MAX_NAME_LENGTH + 1] = "";
-  int purdue_wins = 0, purdue_losses = 0;
+  int purdue_wins = 0;
+  int purdue_losses = 0;
 
   while (true) {
-    int cur_year = 0, month = 0, day = 0;
+    int cur_year = 0;
+    int month = 0;
+    int day = 0;
     char name[MAX_NAME_LENGTH + 1] = "";
     char team[MAX_NAME_LENGTH + 1] = "";
-    int points = 0, assists = 0, blocks = 0;
+    int points = 0;
+    int assists = 0;
+    int blocks = 0;
     float min = 0.0;
     int scanned = fscanf(in_fp, "%d-%d-%d|%49[^,],%49[^#]#%d,%d,%d,%f",
                          &cur_year, &month, &day, name, team, &points,
                          &assists, &blocks, &min);
+
     if (scanned == EOF) {
       break;
     }
+
     if (scanned != 9 || points < 0 || assists < 0 || blocks < 0 || min <= 0.00) {
       CLOSE_2FP_AND_RETURN(in_fp, out_fp, BAD_RECORD);
     }
+
     if (cur_year <= 0 || month < 1 || month > 12 || day < 1 || day > 30) {
       CLOSE_2FP_AND_RETURN(in_fp, out_fp, BAD_DATE);
     }
+
     if (cur_year != year) {
       continue;
     }
+
     valid_data = true;
+
     if (((cur_year != prev_year) || (month != prev_month) ||
          (day != prev_day)) && (prev_year != -1)) {
       date_changed = true;
     }
+
     if (date_changed) {
       if (prev_match_valid) {
         fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", prev_month, prev_day,
@@ -75,6 +92,7 @@ int generate_matches_history(char *in_file, int year, char *out_file) {
           purdue_losses++;
         }
       }
+
       purdue_score = 0;
       opp_score = 0;
       opp_team[0] = '\0';
@@ -84,6 +102,7 @@ int generate_matches_history(char *in_file, int year, char *out_file) {
     prev_year = cur_year;
     prev_month = month;
     prev_day = day;
+
     if (strcmp(team, "Purdue") == 0) {
       purdue_score += points;
     }
@@ -95,6 +114,7 @@ int generate_matches_history(char *in_file, int year, char *out_file) {
     }
     prev_match_valid = true;
   }
+
   if ((prev_year != -1) && prev_match_valid) {
     fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", prev_month, prev_day,
             purdue_score, opp_team, opp_score);
