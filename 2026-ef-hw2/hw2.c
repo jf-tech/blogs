@@ -63,9 +63,12 @@ bool is_record_of_match(record *r, match *m) {
 }
 
 bool is_purdue(char *name) {
-  return name != NULL && strcmp(name, PURDUE_NAME);
+  return name != NULL && strcmp(name, PURDUE_NAME) == 0;
 }
 
+// this function adds a record into a match;
+// it assumes the record does belong to the match (i.e. caller
+// already done the check before calling)
 void add_record_to_match(record *r, match *m) {
   m->year = r->year;
   m->month = r->month;
@@ -104,11 +107,11 @@ int generate_matches_history_2(char *in_file, int year, char *out_file) {
 
   fprintf(out_fp, "%d\n", year);
 
-  bool no_data = true;
-  int purdue_wins = 0;
-  int purdue_losses = 0;
   match_record match;
   reset_match(&match);
+
+  int purdue_wins = 0;
+  int purdue_losses = 0;
 
   while (true) {
     record r;
@@ -128,8 +131,6 @@ int generate_matches_history_2(char *in_file, int year, char *out_file) {
       continue;
     }
 
-    no_data = false;
-
     if (is_record_of_match(&r, &match)) {
       // either the current match is empty or the current match's date stamp matches the record's
       // we need to add the points of the record to the match.
@@ -147,11 +148,13 @@ int generate_matches_history_2(char *in_file, int year, char *out_file) {
         purdue_losses++;
       }
       reset_match(&match);
+      // this record is from a new match, add it.
       add_record_to_match(&r, &match);
     }
   }
 
-  if (no_data) {
+  if (match.year == -1) {
+    // this means we never seen one valid record for this year.
     fclose(in_fp);
     in_fp = NULL;
     fclose(out_fp);
@@ -176,126 +179,6 @@ int generate_matches_history_2(char *in_file, int year, char *out_file) {
   out_fp = NULL;
   return SUCCESS;
 } /* generate_matches_history() */
-
-
-
-
-/*
- * This function generates the matches' results of Purdue against other teams
- * from the record file and outputs the total win and lost.
- */
-int generate_matches_history(char *in_file, int year, char *out_file) {
-  if (year <= 0) {
-    return BAD_DATE;
-  }
-  FILE *in_fp = NULL;
-  in_fp = fopen(in_file, "r");
-  if (in_fp == NULL) {
-    CLOSE_FP_AND_RETURN(in_fp, FILE_READ_ERR);
-  }
-  FILE *out_fp = 0;
-  out_fp = fopen(out_file, "w");
-  if (out_fp == NULL) {
-    CLOSE_FP_AND_RETURN(in_fp, FILE_WRITE_ERR);
-  }
-  fprintf(out_fp, "%d\n", year);
-  bool valid_data = false;
-  bool date_changed = false;
-  bool prev_match_valid = false;
-  int prev_year = -1;
-  int prev_month = 0;
-  int prev_day = 0;
-  int purdue_score = 0;
-  int opp_score = 0;
-  char opp_team[MAX_NAME_LENGTH + 1] = "";
-  int purdue_wins = 0;
-  int purdue_losses = 0;
-
-  while (true) {
-    int cur_year = 0;
-    int month = 0;
-    int day = 0;
-    char name[MAX_NAME_LENGTH + 1] = "";
-    char team[MAX_NAME_LENGTH + 1] = "";
-    int points = 0;
-    int assists = 0;
-    int blocks = 0;
-    float min = 0.0;
-    int scanned = fscanf(in_fp, "%d-%d-%d|%49[^,],%49[^#]#%d,%d,%d,%f",
-                         &cur_year, &month, &day, name, team, &points,
-                         &assists, &blocks, &min);
-
-    if (scanned == EOF) {
-      break;
-    }
-
-    if (scanned != 9 || points < 0 || assists < 0 || blocks < 0 || min <= 0.00) {
-      CLOSE_2FP_AND_RETURN(in_fp, out_fp, BAD_RECORD);
-    }
-
-    if (cur_year <= 0 || month < 1 || month > 12 || day < 1 || day > 30) {
-      CLOSE_2FP_AND_RETURN(in_fp, out_fp, BAD_DATE);
-    }
-
-    if (cur_year != year) {
-      continue;
-    }
-
-    valid_data = true;
-
-    if (((cur_year != prev_year) || (month != prev_month) ||
-         (day != prev_day)) && (prev_year != -1)) {
-      date_changed = true;
-    }
-
-    if (date_changed) {
-      if (prev_match_valid) {
-        fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", prev_month, prev_day,
-                purdue_score, opp_team, opp_score);
-        if (purdue_score > opp_score) {
-          purdue_wins++;
-        }
-        else {
-          purdue_losses++;
-        }
-      }
-
-      purdue_score = 0;
-      opp_score = 0;
-      opp_team[0] = '\0';
-      prev_match_valid = false;
-      date_changed = false;
-    }
-    prev_year = cur_year;
-    prev_month = month;
-    prev_day = day;
-
-    if (strcmp(team, "Purdue") == 0) {
-      purdue_score += points;
-    }
-    else {
-      opp_score += points;
-      if (opp_team[0] == '\0') {
-        strcpy(opp_team, team);
-      }
-    }
-    prev_match_valid = true;
-  }
-
-  if ((prev_year != -1) && prev_match_valid) {
-    fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", prev_month, prev_day,
-            purdue_score, opp_team, opp_score);
-    if (purdue_score > opp_score) {
-      purdue_wins++;
-    }
-    else {
-      purdue_losses++;
-    }
-  }
-  fprintf(out_fp, "Record: %dW-%dL\n", purdue_wins, purdue_losses);
-  CLOSE_2FP_AND_RETURN(in_fp, out_fp, valid_data ? SUCCESS : NO_DATA_POINTS);
-} /* generate_matches_history() */
-
 
 /*
  * This function finds the most valuable player of a match at the given date
