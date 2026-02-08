@@ -47,6 +47,25 @@ int read_record(FILE *fp, record *r) {
   return SUCCESS;
 }
 
+int read_record2(FILE *fp, int *y, int *m, int *d, char *player, char *team,
+    int *pts, int *assists, int *blks, float *mins) {
+  int scanned = fscanf(fp, "%d-%d-%d|%49[^,],%49[^#]#%d,%d,%d,%f",
+    y, m, d, player, team, pts, assists, blks, mins);
+  if (scanned == EOF) {
+    return EOF;
+  }
+
+  if (scanned != 9 || *pts < 0 || *assists < 0 || *blks < 0 || *mins <= 0.00) {
+    return BAD_RECORD;
+  }
+
+  if (*y <= 0 || *m < 1 || *m > 12 || *d < 1 || *d > 30) {
+    return BAD_DATE;
+  }
+
+  return SUCCESS;
+}
+
 typedef struct {
   int   year;
   int   month;
@@ -88,6 +107,128 @@ void add_record_to_match(record *r, match *m) {
     }
   }
 }
+
+/*
+ * This function generates the matches' results of Purdue against other teams
+ * from the record file and outputs the total win and lost.
+ */
+int generate_matches_history_3(char *in_file, int year, char *out_file) {
+  if (year <= 0) {
+    return BAD_DATE;
+  }
+
+  FILE *in_fp = fopen(in_file, "r");
+  if (in_fp == NULL) {
+    return FILE_READ_ERR;
+  }
+
+  FILE *out_fp = fopen(out_file, "w");
+  if (out_fp == NULL) {
+    fclose(in_fp);
+    in_fp = NULL;
+    return FILE_WRITE_ERR;
+  }
+
+  fprintf(out_fp, "%d\n", year);
+
+  int   match_year = INVALID_DATE;
+  int   match_month = INVALID_DATE;
+  int   match_day = INVALID_DATE;
+  int   match_purdue_score = 0;
+  int   match_opp_score = 0;
+  char  match_opp_name[MAX_NAME_LENGTH + 1] = {'\0'};
+  int   purdue_wins = 0;
+  int   purdue_losses = 0;
+
+  while (true) {
+    int   record_year = INVALID_DATE;
+    int   record_month = INVALID_DATE;
+    int   record_day = INVALID_DATE;
+    char  record_player[MAX_NAME_LENGTH + 1] = {'\0'};
+    char  record_team[MAX_NAME_LENGTH + 1] = {'\0'};
+    int   record_points = 0;
+    int   record_assists = 0;
+    int   record_blocks = 0;
+    float record_min = 0;
+
+    int ret = read_record2(in_fp, &record_year, &record_month, &record_day, record_player, record_team,
+      &record_points, &record_assists, &record_blocks, &record_min);
+
+    if (ret == EOF) {
+      break;
+    } else if (ret != SUCCESS) {
+      fclose(in_fp);
+      in_fp = NULL;
+      fclose(out_fp);
+      out_fp = NULL;
+      return ret;
+    }
+
+    if (record_year != year) {
+      continue;
+    }
+
+    if (match_year != INVALID_DATE &&
+        (match_year == record_year || match_month == record_month || match_day == record_day)) {
+      // this means the current match is done processing due to the change of record date stamp.
+      // remember from the spec, all records of the same match are grouped together in the input
+      // file.
+      fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", match_month, match_day,
+        match_purdue_score, match_opp_name, match_opp_score);
+      if (match_purdue_score > match_opp_score) {
+        purdue_wins++;
+      }
+      else {
+        purdue_losses++;
+      }
+      match_year = match_month = match_day = INVALID_DATE;
+      match_purdue_score = match_opp_score = 0;
+      match_opp_name[0] = '\0';
+    }
+
+    // If the record is from an existing match, then add it;
+    // If the record is from a new match, then the prev if block already
+    // resets the match so need to add the record to it.
+    match_year = record_year;
+    match_month = record_month;
+    match_day = record_day;
+    if (is_purdue(record_team)) {
+      match_purdue_score += record_points;
+    } else {
+      match_opp_score += record_points;
+      if (!match_opp_name[0]) {
+        // only string copy when necessary.
+        strcpy(match_opp_name, record_team);
+      }
+    }
+  }
+
+  if (match_year == INVALID_DATE) {
+    // this means we never seen one valid record for this year.
+    fclose(in_fp);
+    in_fp = NULL;
+    fclose(out_fp);
+    out_fp = NULL;
+    return NO_DATA_POINTS;
+  }
+
+  // don't forget, we will have one last match that didn't get to write out in the while loop.
+  fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", match_month, match_day,
+    match_purdue_score, match_opp_name, match_opp_score);
+  if (match_purdue_score > match_opp_score) {
+    purdue_wins++;
+  }
+  else {
+    purdue_losses++;
+  }
+
+  fprintf(out_fp, "Record: %dW-%dL\n", purdue_wins, purdue_losses);
+  fclose(in_fp);
+  in_fp = NULL;
+  fclose(out_fp);
+  out_fp = NULL;
+  return SUCCESS;
+} /* generate_matches_history() */
 
 /*
  * This function generates the matches' results of Purdue against other teams
