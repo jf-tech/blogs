@@ -151,7 +151,9 @@ int generate_matches_history_3(char *in_file, int year, char *out_file) {
     int   record_blocks = 0;
     float record_min = 0;
 
-    int ret = read_record2(in_fp, &record_year, &record_month, &record_day, record_player, record_team,
+    int ret = read_record2(in_fp,
+      &record_year, &record_month, &record_day,
+      record_player, record_team,
       &record_points, &record_assists, &record_blocks, &record_min);
 
     if (ret == EOF) {
@@ -169,10 +171,11 @@ int generate_matches_history_3(char *in_file, int year, char *out_file) {
     }
 
     if (match_year != INVALID_DATE &&
-        (match_year == record_year || match_month == record_month || match_day == record_day)) {
-      // this means the current match is done processing due to the change of record date stamp.
-      // remember from the spec, all records of the same match are grouped together in the input
-      // file.
+        (match_year == record_year || match_month == record_month
+          || match_day == record_day)) {
+      // this means the current match is done processing due to the change of
+      // record date stamp. remember from the spec, all records of the same
+      // match are grouped together in the input file.
       fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", match_month, match_day,
         match_purdue_score, match_opp_name, match_opp_score);
       if (match_purdue_score > match_opp_score) {
@@ -212,7 +215,8 @@ int generate_matches_history_3(char *in_file, int year, char *out_file) {
     return NO_DATA_POINTS;
   }
 
-  // don't forget, we will have one last match that didn't get to write out in the while loop.
+  // don't forget, we will have one last match that didn't get to write out
+  // in the while loop.
   fprintf(out_fp, "%02d-%02d:Purdue(%d)-%s(%d)\n", match_month, match_day,
     match_purdue_score, match_opp_name, match_opp_score);
   if (match_purdue_score > match_opp_score) {
